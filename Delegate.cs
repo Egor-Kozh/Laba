@@ -1,25 +1,37 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33103.184
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delegate", "Delegate\Delegate.csproj", "{3AD62BC1-974D-446A-9586-DD2D913FC544}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3AD62BC1-974D-446A-9586-DD2D913FC544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AD62BC1-974D-446A-9586-DD2D913FC544}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AD62BC1-974D-446A-9586-DD2D913FC544}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AD62BC1-974D-446A-9586-DD2D913FC544}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7A9FCF3D-AD1D-4285-9483-5D006E4978B0}
-	EndGlobalSection
-EndGlobal
+using System;
+
+namespace hey
+{
+    class Programm : IMath
+    {
+        static void Main()
+        {
+            Console.Write("Введите первое число: ");
+            double a = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Введите второе число: ");
+            double b = Convert.ToInt32(Console.ReadLine());
+            IMath.Hello oper;
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("1)Сумма\n2)Умножение\n3)Разность\n4)Деление\n5)Выход");
+                ConsoleKeyInfo key = Console.ReadKey();
+                if (key.Key == ConsoleKey.D1) { oper = IMath.Sum; double res = oper(a, b); Console.WriteLine("\n" + res); Console.ReadKey(); };
+                if (key.Key == ConsoleKey.D2) { oper = IMath.Mul; double res = oper(a, b); Console.WriteLine("\n" + res); Console.ReadKey(); };
+                if (key.Key == ConsoleKey.D3) { oper = IMath.Dif; double res = oper(a, b); Console.WriteLine("\n" + res); Console.ReadKey(); };
+                if (key.Key == ConsoleKey.D4) { if (b == 0) { Console.WriteLine("\nНа ноль делить нельзя!"); Console.ReadKey(); } else { oper = IMath.Div; double res = oper(a, b); Console.WriteLine("\n" + res); Console.ReadKey(); } };
+                if (key.Key == ConsoleKey.D5) { break; };
+            }
+        }
+
+    }
+    interface IMath
+    {
+        static double Sum(double x, double y) => x + y;
+        static double Mul(double x, double y) => x * y;
+        static double Dif(double x, double y) => x - y;
+        static double Div(double x, double y) => x / y;
+
+        delegate double Hello(double x, double y);
+    }
+}
