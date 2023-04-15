@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Hey
 {
     class Programm
@@ -6,7 +8,7 @@ namespace Hey
         {
             Console.Write("Введите размер массива: ");
             int n = Convert.ToInt32(Console.ReadLine());
-            int[] array = new int[n];
+            Array array = Array.CreateInstance(typeof(int), n);
             Console.WriteLine("Введите элементы массива: ");
             for (int i = 0; i < n;i++)
             {
@@ -15,23 +17,25 @@ namespace Hey
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("==Array==\n\n1)Длина\n2)Ранг массива\n3)Отсортировать массив\n4)Бинарный поиск\n5)Очистка\n6)Копировать\n" +
+                Console.Write("==Array==\n\nВаш массив: ");
+                myarr(array);
+                Console.WriteLine("1)Длина\n2)Ранг массива\n3)Отсортировать массив\n4)Бинарный поиск\n5)Очистка\n6)Копировать\n" +
                     "7)Изменить размер массива\n8)Поменять порядок\n9)Поиск заданного объекта\n10)Значение по указанной позиции");
                 ConsoleKeyInfo key = Console.ReadKey();
                 if (key.Key == ConsoleKey.D1) { D1(array); }
                 if (key.Key == ConsoleKey.D2) { D2(array); }
-                if (key.Key == ConsoleKey.D3) { D3(array); }
+                if (key.Key == ConsoleKey.D3) { D3(ref array); }
                 if (key.Key == ConsoleKey.D4) { D4(array); }
-                if (key.Key == ConsoleKey.D5) { D5(array); }
+                if (key.Key == ConsoleKey.D5) { D5(ref array); }
                 if (key.Key == ConsoleKey.D6) { D6(array); }
-                if (key.Key == ConsoleKey.D7) { D7(array); }
-                if (key.Key == ConsoleKey.D8) { D8(array); }
+                if (key.Key == ConsoleKey.D7) { D7(ref array); }
+                if (key.Key == ConsoleKey.D8) { D8(ref array); }
                 if (key.Key == ConsoleKey.D9) { D9(array); }
                 if (key.Key == ConsoleKey.D0) { D10(array); }
                 if (key.Key == ConsoleKey.Escape) { break; }
             }
         }
-        static void myarr(int[] array)
+        static void myarr(Array array)
         {
             Console.Write("[ ");
             for(int i = 0; i < array.Length;i++)
@@ -40,7 +44,7 @@ namespace Hey
             }
             Console.WriteLine("]\n");
         }
-        static void D1(int[] array)
+        static void D1(Array array)
         {
             Console.Clear();
             Console.WriteLine("==Длина==");
@@ -49,7 +53,7 @@ namespace Hey
             Console.ReadKey();
         }
 
-        static void D2(int[] array)
+        static void D2(Array array)
         {
             Console.Clear();
             Console.WriteLine("==Ранг массива==");
@@ -57,7 +61,7 @@ namespace Hey
             Console.Write($"Ранг массива {array.Rank}");
             Console.ReadKey();
         }
-        static void D3(int[] array)
+        static void D3(ref Array array)
         {
             Console.Clear();
             Console.WriteLine("==Отсортировать массив==");
@@ -66,7 +70,7 @@ namespace Hey
             Console.Write($"Отсортированный массив "); myarr(array);
             Console.ReadKey();
         }
-        static void D4(int[] array)
+        static void D4(Array array)
         {
             Console.Clear();
             Console.WriteLine("==Бинарный поиск==");
@@ -76,7 +80,7 @@ namespace Hey
             Console.WriteLine(Array.BinarySearch(array,val));
             Console.ReadKey();
         }
-        static void D5(int[] array)
+        static void D5(ref Array array)
         {
             Console.Clear();
             Console.WriteLine("==Очистка==");
@@ -85,7 +89,7 @@ namespace Hey
             Console.Write($"Очищенный массив: "); myarr(array);
             Console.ReadKey();
         }
-        static void D6(int[] array)
+        static void D6(Array array)
         {
             Console.Clear();
             Console.WriteLine("==Копировать==");
@@ -95,19 +99,21 @@ namespace Hey
             Console.WriteLine("Скопированный массив: "); myarr(arrayCopy);
             Console.ReadKey();
         }
-        static void D7(int[] array)
+        static void D7(ref Array array)
         {
             Console.Clear();
             Console.WriteLine("==Изменить размер массива==");
             Console.Write("Ваш массив "); myarr(array);
             Console.Write("Укажите новый размер массива: ");
-            int n = 0;
-            n = Convert.ToInt32(Console.ReadLine());
-            Array.Resize<int>(ref array, n);      
+            int n = Convert.ToInt32(Console.ReadLine());
+            int[] arrayCopy = new int[array.Length];
+            Array.Copy(array, arrayCopy, array.Length);
+            Array.Resize(ref arrayCopy, n);
+            array = arrayCopy;
             Console.Write("Массив нового размера "); myarr(array);
             Console.ReadKey();
         }
-        static void D8(int[] array)
+        static void D8(ref Array array)
         {
             Console.Clear();
             Console.WriteLine("==Поменять порядок==");
@@ -116,7 +122,7 @@ namespace Hey
             myarr(array);
             Console.ReadKey();
         }
-        static void D9(int[] array)
+        static void D9(Array array)
         {
             Console.Clear();
             Console.WriteLine("==Поиск заданного объекта==");
@@ -125,7 +131,7 @@ namespace Hey
             Console.WriteLine(Array.IndexOf(array, val));
             Console.ReadKey();
         }
-        static void D10(int[] array)
+        static void D10(Array array)
         {
             Console.Clear();
             Console.WriteLine("==Значение по указанной позиции==");
