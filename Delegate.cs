@@ -27,10 +27,22 @@ namespace hey
     }
     interface IMath
     {
-        static double Sum(double x, double y) => x + y;
-        static double Mul(double x, double y) => x * y;
-        static double Dif(double x, double y) => x - y;
-        static double Div(double x, double y) => x / y;
+        static double Sum(double x, double y)
+        {
+            return x + y;
+        }
+        static double Mul(double x, double y)
+        {
+            return x * y;
+        }
+        static double Dif(double x, double y)
+        {
+            return x - y;
+        }
+        static double Div(double x, double y)
+        {
+            return x / y;
+        }
 
         delegate double Hello(double x, double y);
     }
